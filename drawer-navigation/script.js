@@ -9,6 +9,7 @@
   const scrollLockModifier = "drawerOpen";
 
   const scrollbarFixTargets = document.querySelectorAll(".js-scrollbarFix");
+  let scrollbarFix = false;
 
   // 現在の状態（開いていたらtrue）
   let drawerOpen = false;
@@ -77,11 +78,19 @@
 
   function addScrollbarWidth() {
     const scrollbarWidth = window.innerWidth - rootElement.clientWidth;
+    if (!scrollbarWidth) {
+      scrollbarFix = false;
+      return;
+    }
     const value = scrollbarWidth + "px";
     addScrollbarMargin(value);
+    scrollbarFix = true;
   }
 
   function removeScrollbarWidth() {
+    if (!scrollbarFix) {
+      return;
+    }
     addScrollbarMargin("");
   }
 
