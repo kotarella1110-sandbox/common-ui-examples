@@ -47,20 +47,32 @@
   }
 
   function activateScrollLock() {
+    addScrollbarWidth();
     rootElement.classList.add(scrollLockModifier);
   }
 
   function deactivateScrollLock() {
+    removeScrollbarWidth();
     rootElement.classList.remove(scrollLockModifier);
   }
 
   function onTransitionendDrawer(event) {
+    console.log(event)
     if (event.target !== drawer || event.propertyName !== "visibility") {
       return;
     }
     if (!drawerOpen) {
       deactivateScrollLock();
     }
+  }
+
+  function addScrollbarWidth() {
+    const scrollbarWidth = window.innerWidth - rootElement.clientWidth;
+    document.body.style.marginRight = scrollbarWidth + "px";
+  }
+
+  function removeScrollbarWidth() {
+    document.body.style.marginRight = "";
   }
 
   openButton.addEventListener("click", onClickOpenButton, false);

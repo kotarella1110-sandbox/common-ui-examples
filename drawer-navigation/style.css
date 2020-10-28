@@ -1,5 +1,5 @@
 html {
-  overflow: auto;
+  overflow-y: scroll
 }
 
 html.drawerOpen {
