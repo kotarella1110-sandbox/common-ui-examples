@@ -5,6 +5,9 @@
   const closeButton = drawer.querySelector(".js-closeDrawer");
   const backdrop = drawer.querySelector(".js-backdrop");
 
+  const rootElement = document.documentElement;
+  const scrollLockModifier = "drawerOpen";
+
   // 現在の状態（開いていたらtrue）
   let drawerOpen = false;
 
@@ -18,7 +21,7 @@
 
   // stateは真偽値
   function changeState(state) {
-    if(state === drawerOpen) {
+    if (state === drawerOpen) {
       console.log("2回以上連続で同じ状態に変更しようとしました");
       return;
     }
@@ -35,6 +38,7 @@
   }
 
   function onClickOpenButton() {
+    activateScrollLock();
     openDrawer();
   }
 
@@ -42,7 +46,25 @@
     closeDrawer();
   }
 
+  function activateScrollLock() {
+    rootElement.classList.add(scrollLockModifier);
+  }
+
+  function deactivateScrollLock() {
+    rootElement.classList.remove(scrollLockModifier);
+  }
+
+  function onTransitionendDrawer(event) {
+    if (event.target !== drawer || event.propertyName !== "visibility") {
+      return;
+    }
+    if (!drawerOpen) {
+      deactivateScrollLock();
+    }
+  }
+
   openButton.addEventListener("click", onClickOpenButton, false);
   closeButton.addEventListener("click", onClickCloseButton, false);
   backdrop.addEventListener("click", onClickCloseButton, false);
+  drawer.addEventListener("transitionend", onTransitionendDrawer, false);
 })();

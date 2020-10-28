@@ -1,3 +1,11 @@
+html {
+  overflow: auto;
+}
+
+html.drawerOpen {
+  overflow: hidden;
+}
+
 .Header {
   position: fixed;
   top: 0;
