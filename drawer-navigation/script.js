@@ -13,10 +13,15 @@
 
   const scrollableTarget = drawer.querySelector(".js-scrollable");
 
+  const anchorLinks = drawer.querySelectorAll('.Nav-link');
+
   let touchY = null;
 
   // 現在の状態（開いていたらtrue）
   let drawerOpen = false;
+
+  // 閉じたあとに開くボタンにフォーカスを戻すか
+  let focusOpenButtonAfterClose = true;
 
   const tabbableElements = drawer.querySelectorAll("a[href], button:not(:disabled)");
   // ドロワー内の Tab キーでフォーカス可能な最初の要素
@@ -43,6 +48,8 @@
   }
 
   function openDrawer() {
+    // ドロワーを開くときにフォーカスを戻す設定にリセット
+    focusOpenButtonAfterClose = true;
     changeState(true);
   }
 
@@ -86,7 +93,10 @@
       // アニメーション終了時にスクロール位置を固定
       // 閉じるボタンのクリックイベントに結び付けることができないため、トランジション（遷移アニメーション）終了時の transitionend イベントにイベントハンドラを追加
       deactivateScrollLock();
-      openButton.focus();
+      // 開くボタンにフォーカスを戻す設定の場合のみ、フォーカスを戻す
+      if (focusOpenButtonAfterClose) {
+        openButton.focus();
+      }
     }
   }
 
@@ -202,6 +212,15 @@
     closeDrawer();
   }
 
+  /**
+   * ナビリンククリックでドロワーを閉じる
+   */
+  function onClickAnchorLink(event) {
+    // アンカーリンクをクリックしたら開くボタンにフォーカスを戻す設定を false にする
+    focusOpenButtonAfterClose = false;
+    closeDrawer();
+  }
+
   openButton.addEventListener("click", onClickOpenButton, false);
   closeButton.addEventListener("click", onClickCloseButton, false);
   backdrop.addEventListener("click", onClickCloseButton, false);
@@ -215,4 +234,8 @@
   lastTabbable.addEventListener("keydown", onKeydownTabKeyLastTabbable, false);
 
   window.addEventListener("keydown", onKeydownEsc, false);
+
+  for (let i = 0, len = anchorLinks.length; i < len; i++) {
+    anchorLinks[i].addEventListener('click', onClickAnchorLink, false);
+  }
 })();
