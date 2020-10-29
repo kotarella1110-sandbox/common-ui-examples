@@ -1,11 +1,19 @@
 html {
+  /* 常に縦スクロールバーが表示 */
   overflow-y: scroll
 }
 
+/* ドロワーが開いたときだけ hidden にしてスクロールが発生しないようにする */
 html.drawerOpen {
   overflow: hidden;
 }
 
+/**
+ * `width:100%` ではなく、オフセット指定によって画面上部をフルに使いつつ margin-right をビューポート内に収める
+ * `position:fixed` が指定された `.Header` の包含ブロックはビューポート
+ * `width:100%` があると、スクロールバーが消えた瞬間にスクロールバーが使用していた幅も含め、ビューポート幅に対して 100% となってしまう
+ * この状態でmargin-rightが追加されても余白はビューポートの外
+ */
 .Header {
   position: fixed;
   top: 0;
@@ -43,6 +51,8 @@ html.drawerOpen {
 
 .Nav {
   overflow: auto;
+  /* 普段とは若干異なった固い感じのスクロール動作となってしまうため、使い慣れたスクロール感を出すために指定 */
+  -webkit-overflow-scrolling: touch;
 }
 
 .Drawer[aria-expanded] {
