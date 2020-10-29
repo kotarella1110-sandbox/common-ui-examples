@@ -19,7 +19,10 @@
   let drawerOpen = false;
 
   const tabbableElements = drawer.querySelectorAll("a[href], button:not(:disabled)");
+  // ドロワー内の Tab キーでフォーカス可能な最初の要素
   const firstTabbable = tabbableElements[0];
+  // ドロワー内の Tab キーでフォーカス可能な最後の要素
+  const lastTabbable = tabbableElements[tabbableElements.length - 1]
 
   // stateは真偽値
   function changeAriaExpanded(state) {
@@ -164,6 +167,29 @@
     event.preventDefault();
   }
 
+  /**
+   * フォーカスがドロワー内から外側へ出ることなく、ドロワー内部を循環するようにフォーカス制御する
+   */
+
+  function onKeydownTabKeyFirstTabbable(event) {
+    // Shift キーが押されていなければブラウザ標準のフォーカス制御
+    if(event.key !== "Tab" || !event.shiftKey) {
+      return;
+    }
+    // ブラウザ標準のフォーカス制御無効
+    event.preventDefault();
+    lastTabbable.focus();
+  }
+
+  function onKeydownTabKeyLastTabbable(event) {
+    // Shift キーが押されていればブラウザ標準のフォーカス制御
+    if(event.key !== "Tab" || event.shiftKey) {
+      return;
+    }
+    event.preventDefault();
+    firstTabbable.focus();
+  }
+
   openButton.addEventListener("click", onClickOpenButton, false);
   closeButton.addEventListener("click", onClickCloseButton, false);
   backdrop.addEventListener("click", onClickCloseButton, false);
@@ -172,4 +198,7 @@
   scrollableTarget.addEventListener("touchstart", onTouchStart, false);
   scrollableTarget.addEventListener("touchmove", onTouchMove, false);
   backdrop.addEventListener("touchmove", onTouchMoveBackdrop, false);
+
+  firstTabbable.addEventListener("keydown", onKeydownTabKeyFirstTabbable, false);
+  lastTabbable.addEventListener("keydown", onKeydownTabKeyLastTabbable, false);
 })();
