@@ -190,6 +190,18 @@
     firstTabbable.focus();
   }
 
+  /**
+   * Escape キーでドロワーを閉じる
+   */
+
+  function onKeydownEsc(event) {
+    if(!drawerOpen || event.key !== "Escape") {
+      return;
+    }
+    event.preventDefault();
+    closeDrawer();
+  }
+
   openButton.addEventListener("click", onClickOpenButton, false);
   closeButton.addEventListener("click", onClickCloseButton, false);
   backdrop.addEventListener("click", onClickCloseButton, false);
@@ -201,4 +213,6 @@
 
   firstTabbable.addEventListener("keydown", onKeydownTabKeyFirstTabbable, false);
   lastTabbable.addEventListener("keydown", onKeydownTabKeyLastTabbable, false);
+
+  window.addEventListener("keydown", onKeydownEsc, false);
 })();
