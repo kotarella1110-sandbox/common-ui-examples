@@ -18,6 +18,9 @@
   // 現在の状態（開いていたらtrue）
   let drawerOpen = false;
 
+  const tabbableElements = drawer.querySelectorAll("a[href], button:not(:disabled)");
+  const firstTabbable = tabbableElements[0];
+
   // stateは真偽値
   function changeAriaExpanded(state) {
     const value = state ? "true" : "false";
@@ -48,6 +51,7 @@
     // アニメーション開始時にスクロール位置を固定
     activateScrollLock();
     openDrawer();
+    firstTabbable.focus();
   }
 
   function onClickCloseButton() {
@@ -79,6 +83,7 @@
       // アニメーション終了時にスクロール位置を固定
       // 閉じるボタンのクリックイベントに結び付けることができないため、トランジション（遷移アニメーション）終了時の transitionend イベントにイベントハンドラを追加
       deactivateScrollLock();
+      openButton.focus();
     }
   }
 

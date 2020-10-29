@@ -1,3 +1,7 @@
+:focus {
+  outline: 3px solid tomato;
+}
+
 html {
   /* 常に縦スクロールバーが表示 */
   overflow-y: scroll
@@ -75,6 +79,11 @@ html.drawerOpen {
 /* 開いているとき */
 .Drawer[aria-expanded="true"] {
   visibility: visible;
+  /**
+   * 開くボタンが押下され、開くアニメーションが始まった瞬間はドロワーが非表示であり、フォーカスできない
+   * ドロワー本体が表示状態になる時は遷移アニメーションが開始と同時に終了し、状態がすぐに反映される
+   */
+  transition-duration: 0s;
 }
 
 .Drawer[aria-expanded="true"] .Drawer-backdrop {
