@@ -1,0 +1,98 @@
+html {
+  overflow-y: scroll;
+}
+
+body {
+  margin: 0;
+  background-color: ivory;
+  font-family: sans-serif;
+}
+
+.Header {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.Header-title {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1;
+  text-align: center;
+}
+
+/* IE をサポートする必要がない場合は `position: sticky` を使用可能 */
+/* .Nav {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+} */
+
+.Nav-list {
+  display: flex;
+  justify-content: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  background-color: darkslategray;
+  list-style-type: none;
+}
+
+.Nav-list.fixed {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.Nav-item {
+  border-width: 0 1px 0 0;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.Nav-item:first-child {
+  border-left-width: 1px;
+}
+
+.Nav-link {
+  display: block;
+  padding: 1rem;
+  color: ivory;
+  text-decoration: none;
+  transition: background-color 0.1s linear;
+}
+
+.Nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.Content {
+  display: block; /* for IE */
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 20px;
+  padding-left: 20px;
+  max-width: 600px;
+}
+
+.Content-section {
+}
+
+.Content-title {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.Content-text {
+  margin-top: 1rem;
+  text-align: justify;
+}
+
+.Footer {
+  margin-top: 3rem;
+  padding: 3rem;
+  background-color: darkcyan;
+  font-size: 2rem;
+  text-align: center;
+  color: ivory;
+}
